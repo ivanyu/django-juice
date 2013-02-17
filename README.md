@@ -1,7 +1,7 @@
 django-juice
 ============
 
-A collection of small Django utilities in form of Django app.
+A collection of small reusable Django utilities in form of Django app.
 
 Mixins:
 * `LoginRequiredMixin` - a mixin which makes class-based view available only for authenticated users.
