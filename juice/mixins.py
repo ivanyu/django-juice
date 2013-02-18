@@ -13,12 +13,7 @@ from types import MethodType
 from django.core.exceptions import ImproperlyConfigured
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-
-
-# A tool for detecting string (to avoid dependency on six).
-_is_string = (lambda s: isinstance(s, basestring)
-              if 'basestring' in dir(__builtins__)
-              else lambda s: isinstance(s, str))
+from django.utils import six
 
 
 class LoginRequiredMixin(object):
@@ -119,7 +114,7 @@ class UrlKwargsMixing(object):
         # Normalize kwargs - convert strings into tuples.
         normalized_kwargs = []
         for el in self.url_kwargs:
-            if _is_string(el):
+            if isinstance(el, six.string_types):
                 normalized_kwargs.append((el, '_'+el, ))
             else:
                 normalized_kwargs.append(el)
