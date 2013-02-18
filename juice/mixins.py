@@ -8,6 +8,7 @@ authenticated users.
 `UrlKwargsMixing` - a mixin which extracts required kwargs from the url and
 makes them available inside a view as attributes.
 """
+from __future__ import unicode_literals
 from types import MethodType
 
 from django.core.exceptions import ImproperlyConfigured
