@@ -7,6 +7,9 @@ authenticated users.
 
 `UrlKwargsMixing` - a mixin which extracts required kwargs from the url and
 makes them available inside a view as attributes.
+
+`StoreArgsBeforeDispatchMixin` - a mixin which stores `args` and `kwargs` in
+`self` before dispatching. Useful in Django <=1.4.
 """
 from __future__ import unicode_literals
 from types import MethodType
@@ -32,6 +35,29 @@ class LoginRequiredMixin(object):
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super(LoginRequiredMixin, self).dispatch(
+            request, *args, **kwargs)
+
+
+class StoreArgsBeforeDispatchMixin(object):
+    """
+    A mixin which stores `args` and `kwargs` in `self` before dispatching.
+
+    The mixin must stay in bases list before any mixin or base class which
+    needs accessing to `self.args` or `self.kwargs` before call of
+    `View`'s `dispatch`.
+
+    It's useful for Django <=1.4 because in it `args` and `kwargs` are assigned
+    to self only in `View`'s `dispatch` method which make them inaccessible
+    before this call.
+
+    Django >=1.5 assigns arguments to self in the wrapper returned by `as_view`
+    so this mixin is useless.
+    """
+
+    def dispatch(self, request, *args, **kwargs):
+        self.args = args
+        self.kwargs = kwargs
+        return super(StoreArgsBeforeDispatchMixin, self).dispatch(
             request, *args, **kwargs)
 
 
