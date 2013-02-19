@@ -39,10 +39,13 @@ setup(
     install_requires=[],
     include_package_data=True,
     classifiers=[
-        "Development Status :: 4 - Beta",
-        "Programming Language :: Python",
         "Framework :: Django",
+        "Programming Language :: Python",
         "Environment :: Web Environment",
+        "Development Status :: 4 - Beta",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
 )
