@@ -30,6 +30,23 @@ class TrimCharFieldsModelFormMetaclass(ModelFormMetaclass):
     """
     A metaclass for ModelForm which replaces `CharField` with `TrimCharField`
     for fields listed in `Meta.trim_fields`.
+
+    Example:
+
+        class UserProfileForm(six.with_metaclass(
+            TrimCharFieldsModelFormMetaclass, forms.ModelForm)):
+            class Meta:
+                model = UserProfile
+                fields = ('real_name', 'about', )
+                trim_fields = ('about', )
+
+            # the rest of Meta and UserProfileForm
+
+    In this Example two fields (`real_name` and `about`) will be taken from
+    UserProfile. But we want to make `about` field able to trim posted value
+    to `max_length` instead of raiseing exception. So we add it to `trim_fields`
+    and the metaclass will replace its `CharField` with `TrimCharField` using
+    all `CharField`'s parameters (`label`, `required`, `widget` etc.)
     """
 
     def __new__(cls, name, bases, attrs):
