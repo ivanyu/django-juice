@@ -96,7 +96,7 @@ class UrlKwargsMixing(object):
                 if self.url_kwargs_required:
                     raise TypeError(req_msg_tpl.format(kwarg))
                 return
-            if getattr(self, attr_name, None):
+            if hasattr(self, attr_name):
                 raise ImproperlyConfigured(
                     "Attribute '{}' is alreay exists.".format(attr_name))
             setattr(self, attr_name, kwargs[kwarg])
