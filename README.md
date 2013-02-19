@@ -6,6 +6,7 @@ A collection of small reusable Django utilities in form of Django app.
 Mixins:
 * `LoginRequiredMixin` - a mixin which makes class-based view available only for authenticated users.
 * `StoreArgsBeforeDispatchMixin` - a mixin which stores `args` and `kwargs` in `self` before dispatching. Useful in Django <=1.4.
+* `GetObjectOnceMixin`- a mixin which prevents `get_object` from make more than one call to databese even in case of many calls.
 * `UrlKwargsMixing` - a mixin which extracts required kwargs from the url and makes them available inside a view as attributes.
 
 Form utils:
