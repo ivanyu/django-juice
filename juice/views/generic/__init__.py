@@ -44,13 +44,16 @@ class ConfirmationView(UrlKwargsMixing,
     def get_back_url(self):
         return self.back_url
 
+    def get_form_name(self):
+        return self.form_name
+
     def get(self, request, *args, **kwargs):
         self.back_url, self.success_url = self.__extract_urls(request.GET)
         return super(ConfirmationView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context_data = super(ConfirmationView, self).get_context_data(**kwargs)
-        context_data['form_name'] = self.form_name
+        context_data['form_name'] = self.get_form_name()
         context_data['yes_btn_value'] = 'yes'
         context_data['no_btn_value'] = 'no'
         context_data['back_url'] = self.back_url
@@ -71,7 +74,7 @@ class ConfirmationView(UrlKwargsMixing,
     def post(self, request, *args, **kwargs):
         self.back_url, self.success_url = self.__extract_urls(request.POST)
 
-        confirm = request.POST.get(self.form_name, None)
+        confirm = request.POST.get(self.get_form_name(), None)
         if not confirm or confirm not in ['yes', 'no',]:
             return HttpResponseBadRequest()
         if confirm == 'no':
