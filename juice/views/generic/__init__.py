@@ -21,7 +21,6 @@ class ConfirmationView(UrlKwargsMixing,
 
     default_url = '/'
 
-    url_kwargs = ['pk',]
     form_class = __Form
     form_name = '_confirm'
 
