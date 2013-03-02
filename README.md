@@ -24,7 +24,7 @@ before validation.
 replaces `CharField` with `TrimCharField` for fields listed in `Meta.trim_fields`.
 
 **HTTP utilities**:
-`JsonResponse` - a subclass of `HttpResponse` which converts dictionary passed
+* `JsonResponse` - a subclass of `HttpResponse` which converts dictionary passed
 to its constructor to JSON format and sets ContentType header to
 "application/json".
 
