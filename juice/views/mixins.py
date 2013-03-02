@@ -18,6 +18,7 @@ from __future__ import unicode_literals
 from types import MethodType
 
 from django.core.exceptions import ImproperlyConfigured
+from django.http import HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.utils import six
@@ -38,6 +39,26 @@ class LoginRequiredMixin(object):
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super(LoginRequiredMixin, self).dispatch(
+            request, *args, **kwargs)
+
+
+class AjaxLoginRequiredMixin(object):
+    """
+    A view mixin which makes Ajax-oriented class-based view available only for
+    authenticated users by returning HttpResponseForbidden in case user isn't
+    authenticated.
+    The mixin must be the first (the left-most) in view's superclass list.
+
+
+    Example:
+
+        class MyView(AjaxLoginRequiredMixin, <other mixins>, DetailView):
+            # ... class content ...
+    """
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated():
+            return HttpResponseForbidden()
+        return super(AjaxLoginRequiredMixin, self).dispatch(
             request, *args, **kwargs)
 
 
