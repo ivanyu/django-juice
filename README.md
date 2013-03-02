@@ -17,11 +17,16 @@ one call to databese even in case of many calls.
 * `UrlKwargsMixing` - a mixin which extracts required kwargs from the url and
 makes them available inside a view as attributes.
 
-**Form utils**:
+**Form utilities**:
 * `TrimCharField` - a char field which truncates it's value to `max_length`
 before validation.
 * `TrimCharFieldsModelFormMetaclass` - a metaclass for ModelForm which
 replaces `CharField` with `TrimCharField` for fields listed in `Meta.trim_fields`.
+
+**HTTP utilities**:
+`JsonResponse` - a subclass of `HttpResponse` which converts dictionary passed
+to its constructor to JSON format and sets ContentType header to
+"application/json".
 
 License
 =======

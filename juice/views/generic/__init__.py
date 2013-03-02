@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 """
 Generic views for different purposes.
+
+`ConfirmationView` - a generic view which helps solve a problem of showing
+confirmation forms for different actions.
 """
 
 from django import forms

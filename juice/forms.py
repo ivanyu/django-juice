@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-A collection of form utils.
+Form utilities.
 
 `TrimCharField` - a char field which truncates it's value to max_length before
 validation.
