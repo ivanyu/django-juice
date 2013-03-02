@@ -27,7 +27,7 @@ class AjaxActionView(View):
         def get_handler(param_name, param_type):
             attr_name = '_'+param_name
 
-            def srt_handler(self, request):
+            def str_handler(self, request):
                 if param_name not in request.POST:
                     raise ParamExtractionError
                 setattr(self, attr_name, request.POST[param_name])
@@ -50,6 +50,7 @@ class AjaxActionView(View):
 
         norm_post_parameters = []
         for x in self.post_parameters:
+
             if isinstance(x, six.string_types):
                 param_name, param_type = x, 'str'
             else:
@@ -59,6 +60,7 @@ class AjaxActionView(View):
                 handler = MethodType(
                     get_handler(param_name, param_type), self)
             elif param_type == 'custom':
+                print '2'
                 handler = getattr(self, "_handle_"+param_name)
             else:
                 msg = "Unknown param type '{0}'".format(param_type)
