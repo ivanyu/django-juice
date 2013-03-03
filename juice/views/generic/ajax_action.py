@@ -11,9 +11,9 @@ class ParamExtractionError(Exception):
     pass
 
 
-class RequestParamsExtractingMixin(object):
+class RequestParamsExtractionMixin(object):
     def __init__(self, *args, **kwargs):
-        super(RequestParamsExtractingMixin, self).__init__(*args, **kwargs)
+        super(RequestParamsExtractionMixin, self).__init__(*args, **kwargs)
 
         if not 'method' in kwargs:
             raise ImproperlyConfigured(
@@ -84,27 +84,27 @@ class RequestParamsExtractingMixin(object):
                     handler(request)
             except ParamExtractionError:
                 return HttpResponseBadRequest()
-        return super(RequestParamsExtractingMixin, self).dispatch(
+        return super(RequestParamsExtractionMixin, self).dispatch(
             request, *args, **kwargs)
 
 
-class PostParamsExtractingMixin(RequestParamsExtractingMixin):
+class PostParamsExtractionMixin(RequestParamsExtractionMixin):
     post_parameters = []
 
     def __init__(self, *args, **kwargs):
         kwargs['method'] = 'post'
-        super(PostParamsExtractingMixin, self).__init__(*args, **kwargs)
+        super(PostParamsExtractionMixin, self).__init__(*args, **kwargs)
 
 
-class GetParamsExtractingMixin(RequestParamsExtractingMixin):
+class GetParamsExtractionMixin(RequestParamsExtractionMixin):
     get_parameters = []
 
     def __init__(self, *args, **kwargs):
         kwargs['method'] = 'get'
-        super(GetParamsExtractingMixin, self).__init__(*args, **kwargs)
+        super(GetParamsExtractionMixin, self).__init__(*args, **kwargs)
 
 
-class AjaxActionView(PostParamsExtractingMixin,
+class AjaxActionView(PostParamsExtractionMixin,
                      View):
     """
 
