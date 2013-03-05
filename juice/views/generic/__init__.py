@@ -7,7 +7,9 @@ confirmation forms for different actions.
 """
 
 from .confirmation import ConfirmationView
-from .ajax_action import (AjaxActionView, ParamExtractionError)
+from .ajax_action import (AjaxActionView, ParamExtractionError,
+                          PostParamsExtractionMixin, GetParamsExtractionMixin)
 
 __all__ = ['ConfirmationView',
-           'AjaxActionView', 'ParamExtractionError']
+           'AjaxActionView', 'ParamExtractionError',
+           'PostParamsExtractionMixin', 'GetParamsExtractionMixin']
