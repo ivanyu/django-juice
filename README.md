@@ -8,6 +8,8 @@ A collection of small reusable Django utilities in form of Django app.
 confirmation form for different actions.
 
 **Mixins**:
+* `EnsureCsrfCookieMixin` - a view mixin which forces class-based view to set
+CSRF token cookie.
 * `LoginRequiredMixin` - a mixin which makes class-based view available only
 for authenticated users.
 * `StoreArgsBeforeDispatchMixin` - a mixin which stores `args` and `kwargs` in

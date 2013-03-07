@@ -2,6 +2,9 @@
 """
 A colliction of view mixins.
 
+`EnsureCsrfCookieMixin` - a view mixin which forces class-based view to set
+CSRF token cookie.
+
 `LoginRequiredMixin` - a mixin which makes class-based view available only for
 authenticated users.
 
@@ -22,17 +25,44 @@ from django.http import HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.utils import six
+from django.views.decorators.csrf import ensure_csrf_cookie
+
+
+class EnsureCsrfCookieMixin(object):
+    """
+    A view mixin which forces class-based view to set CSRF token cookie by
+    by applying Django's ensure_csrf_cookie decorator.
+    The mixin must be the first (the left-most) in view's superclass list.
+
+    Example:
+
+        class MyView(EnsureCsrfCookieMixin, <other mixins>, DetailView):
+            # ... class content ...
+    """
+
+    @method_decorator(ensure_csrf_cookie)
+    def dispatch(self, request, *args, **kwargs):
+        return super(EnsureCsrfCookieMixin, self).dispatch(
+            request, *args, **kwargs)
 
 
 class LoginRequiredMixin(object):
     """
     A view mixin which makes class-based view available only for authenticated
     users by applying Django's login_required decorator.
-    The mixin must be the first (the left-most) in view's superclass list.
+    The mixin must be the first (the left-most) in view's superclass list
+    after EnsureCsrfCookieMixin (if it's used).
 
-    Example:
+    Example (with EnsureCsrfCookieMixin):
 
-        class MyView(LoginRequiredMixin, <other mixins>, DetailView):
+        class MyView(EnsureCsrfCookieMixin, LoginRequiredMixin, <other mixins>,
+                     DetailView):
+            # ... class content ...
+
+    Example (without EnsureCsrfCookieMixin):
+
+        class MyView(LoginRequiredMixin, <other mixins>,
+                     DetailView):
             # ... class content ...
     """
 
